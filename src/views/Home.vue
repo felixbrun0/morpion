@@ -18,6 +18,9 @@ export default {
     goTo(route) {
       this.$router.push({ name: route });
     },
+    createGame() {
+      this.$router.push({ name: 'new-game' });
+    },
   },
 };
 </script>

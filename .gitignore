@@ -25,6 +25,7 @@ coverage
 *.ntvs*
 *.sln
 *.sw?
+.env
 
 *.tsbuildinfo
 /package-lock.json
