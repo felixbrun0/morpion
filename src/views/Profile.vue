@@ -2,7 +2,6 @@
 import api from '../api';
 
 export default {
-  name: "ProfileView",
   data() {
     return {
       user: {
