@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       user: {
+        id: 0,
         name: '',
         email: ''
       },
@@ -16,6 +17,7 @@ export default {
       .then(response => {
         next(vm => {
           vm.user = response.data;
+          localStorage.setItem('user', JSON.stringify(vm.user));
         });
       })
       .catch(error => {
