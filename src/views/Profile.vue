@@ -8,6 +8,7 @@ export default {
         name: '',
         email: ''
       },
+      errors: []
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -42,14 +43,19 @@ export default {
 <template>
   <div>
     <h1>Profile</h1>
-    <form>
+    <form @submit.prevent="saveProfile">
       <label for="name">Name:</label>
       <input type="text" id="name" v-model="user.name">
       <label for="email">Email:</label>
       <input type="email" id="email" v-model="user.email">
-      <button type="submit" @click="saveProfile">Enregistrer</button>
+      <button type="submit">Enregistrer</button>
     </form>
     <button @click="goToHome">Retour à l'accueil</button>
+    <div v-if="errors.length">
+      <ul>
+        <li v-for="error in errors" :key="error">{{ error }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
