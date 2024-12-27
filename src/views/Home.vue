@@ -5,21 +5,25 @@
       <h4>Se joue à 3 (on a révolutionner le morpion les frères)</h4>
     </div>
     <div class="button-group">
-      <button @click="goTo('new-game')">Nouvelle Partie</button>
+      <button @click="createGame">Nouvelle Partie</button>
       <button @click="goTo('profile')">Mon Profil</button>
-      <button @click="goTo('join-game')">Rejoindre une Partie</button>
+      <button @click="goTo('join')">Rejoindre une Partie</button>
     </div>
   </div>
 </template>
 
 <script>
+import api from "../api/index.js";
 export default {
   methods: {
     goTo(route) {
       this.$router.push({ name: route });
     },
     createGame() {
-      this.$router.push({ name: 'new-game' });
+      api.post("/api/games").then((response) => {
+        console.log(response);
+        this.$router.push({ name: "game", params: { id: response.data.id } });
+      });
     },
   },
 };

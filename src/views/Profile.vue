@@ -1,13 +1,18 @@
 <script>
 import api from '../api';
+import ErrorDisplay from '../components/ErrorDisplay.vue';
 
 export default {
+  components: {
+    ErrorDisplay
+  },
   data() {
     return {
       user: {
         id: 0,
         name: '',
-        email: ''
+        email: '',
+        apiKey: ''
       },
       errors: []
     };
@@ -27,12 +32,16 @@ export default {
   },
   methods: {
     saveProfile() {
+      localStorage.setItem('user', JSON.stringify(this.user));
       api.put('/api/profile', this.user)
         .then(response => {
           console.log(response.data);
+          console.log(this.user);
+          localStorage.setItem('user', JSON.stringify(this.user));
         })
         .catch(error => {
-          this.errors = error.response.data.errors;
+          console.log(error.response.data.errors.message);
+          this.errors = error.response.data.errors.message;
         });
     },
     goToHome() {
@@ -50,14 +59,12 @@ export default {
       <input type="text" id="name" v-model="user.name">
       <label for="email">Email:</label>
       <input type="email" id="email" v-model="user.email">
+      <label for="apiKey">API Key:</label>
+      <input type="text" id="apiKey" v-model="user.apiKey">
       <button type="submit">Enregistrer</button>
     </form>
     <button @click="goToHome">Retour à l'accueil</button>
-    <div v-if="errors.length">
-      <ul>
-        <li v-for="error in errors" :key="error">{{ error }}</li>
-      </ul>
-    </div>
+    <ErrorDisplay :errors="errors" />
   </div>
 </template>
 
